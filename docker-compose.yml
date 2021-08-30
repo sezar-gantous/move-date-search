@@ -1,0 +1,31 @@
+version: "3.7"
+
+services:
+  movie-date-search:
+    image: docker.io/copperdock/movie-date-search:v1.0.0
+    container_name: movie-date-search-react
+    env_file:
+      - ./.env
+    environment:
+      - SKIP_PREFLIGHT_CHECK=true
+      - PORT=3100
+    working_dir: /app
+    stdin_open: true
+    command: >
+      sh -c "npx yarn start"
+    ports:
+      - "3100:3100"
+    volumes:
+      - ./src:/app/src
+      - ./public:/app/public
+      - ./.eslintrc:/app/.eslintrc
+      - ./.prettierrc:/app/.prettierrc
+      - ./package.json:/app/package.json
+      - ./.env:/app/.env
+      - ./jsconfig.json:/app/jsconfig.json
+    networks:
+      - movie-date-search-network
+
+networks:
+  movie-date-search-network:
+    driver: bridge
