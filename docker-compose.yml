@@ -23,6 +23,7 @@ services:
       - ./package.json:/app/package.json
       - ./.env:/app/.env
       - ./jsconfig.json:/app/jsconfig.json
+      - ./.prettierignore:/app/.prettierignore
     networks:
       - movie-date-search-network
 
