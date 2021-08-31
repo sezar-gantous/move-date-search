@@ -1,10 +1,10 @@
 import React from 'react';
-import '@testing-library/jest-dom';
-import MovieDateSearchContainer from './MovieDateSearch';
+import { render, screen } from '@testing-library/react';
+import MovieDateSearchContainer, { defaultProps } from './MovieDateSearch';
 
 describe('Smoke Test', () => {
   it('Renders without crashing', () => {
-    render(<MovieDateSearchContainer />, {});
+    render(<MovieDateSearchContainer {...defaultProps} />, {});
     const testId = screen.getByTestId('MovieDateSearchContainer');
     expect(testId).toBeInTheDocument();
   });

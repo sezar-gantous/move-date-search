@@ -1,8 +1,16 @@
+import React from 'react';
 import { render, screen } from '@testing-library/react';
 import App from './App';
 
-test('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+describe('Smoke Test', () => {
+  it('Renders PageHeader', () => {
+    render(<App />, {});
+    const testId = screen.getByTestId('PageHeaderContainer');
+    expect(testId).toBeInTheDocument();
+  });
+  it('Renders FooterHeader', () => {
+    render(<App />, {});
+    const testId = screen.getByTestId('PageFooterContainer');
+    expect(testId).toBeInTheDocument();
+  });
 });

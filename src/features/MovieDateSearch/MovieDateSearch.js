@@ -45,8 +45,8 @@ const MovieDateSearch = ({
 );
 
 export const defaultProps = {
-  selectedStartDate: new Date(),
-  selectedEndDate: new Date(),
+  selectedStartDate: new Date('2014-08-18T21:11:54'),
+  selectedEndDate: new Date('2014-08-18T21:11:54'),
   changeStartDate: () => {},
   changeEndDate: () => {},
 };
@@ -54,8 +54,8 @@ export const defaultProps = {
 MovieDateSearch.defaultProps = defaultProps;
 
 MovieDateSearch.propTypes = {
-  selectedStartDate: PropTypes.objectOf(PropTypes.Date),
-  selectedEndDate: PropTypes.objectOf(PropTypes.Date),
+  selectedStartDate: PropTypes.Date,
+  selectedEndDate: PropTypes.Date,
   changeStartDate: PropTypes.func,
   changeEndDate: PropTypes.func,
 };
