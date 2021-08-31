@@ -57,7 +57,6 @@ const Home = () => {
   };
 
   const changeStartDate = date => {
-    console.log('DATE', date);
     if (new Date(date) > 0 || date === null) {
       const formatedDate = date !== null ? format(date, 'yyyy-MM-dd') : date;
       const formatedEnddDate =
