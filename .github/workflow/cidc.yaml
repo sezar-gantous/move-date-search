@@ -1,0 +1,83 @@
+name: Integration workflow
+
+on: 
+  push:
+
+jobs:
+  test-react:
+    runs-on: ubuntu-18.04
+    env:
+      NODE_OPTIONS: --max_old_space_size=4096
+      SKIP_PREFLIGHT_CHECK: true
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - uses: actions/setup-node@v2
+      with:
+        node-version: '14'
+    - name: Get yarn cache directory path
+      id: yarn-cache-dir-path
+      run: echo "::set-output name=dir::$(yarn cache dir)"
+    - uses: actions/cache@v2
+      id: yarn-cache
+      with: # At the time of writing, there is no way to clear the cache unless you create a new one
+            # So just version in the key 
+        path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+        key: ${{ runner.os }}-yarn-v1-${{ hashFiles('./yarn.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-yarn-
+    - name: Install react dependencies
+      run: |
+        # using if: steps.yarn-cache.outputs.cache-hit != 'true' is not great
+        # as we always need the node_module folder and caching the folder also not recommended
+        # as it can get corrupted...
+        # using the --prefer-offline flag seems the best way to go
+
+        yarn --prefer-offline
+    - name: Run tests
+      run: |
+        echo "REACT_APP_MOVIEDB_API=${{secrets.REACT_APP_MOVIEDB_API}}" >> .env
+        yarn test --coverage --maxWorkers 2 -u
+     
+  deploy-feature-branch:
+    needs: [test-react]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      # ( Build to ./dist or other directory... )
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+      - uses: actions/cache@v2
+        id: yarn-cache
+        with: # At the time of writing, there is no way to clear the cache unless you create a new one
+              # So just version in the key 
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-v1-${{ hashFiles('./yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+      - name: Install react dependencies
+        run: |
+          # using if: steps.yarn-cache.outputs.cache-hit != 'true' is not great
+          # as we always need the node_module folder and caching the folder also not recommended
+          # as it can get corrupted...
+          # using the --prefer-offline flag seems the best way to go
+
+          yarn --prefer-offline
+      - name: Build react
+        env: 
+          SKIP_PREFLIGHT_CHECK: true
+        run: |
+          yarn build
+      - name: Deploy to Netlify
+        uses: nwtgck/actions-netlify@v1.2
+        with:
+          publish-dir: './build'
+          deploy-message: "Deploy from GitHub Actions"
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+        timeout-minutes: 1
