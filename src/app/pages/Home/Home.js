@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import api from 'services/api';
-import * as ImageListStyles from './styledComponents';
+import { MovieGrid } from 'features/MovieGrid';
+// import * as ImageListStyles from './styledComponents';
 
 const Home = () => {
   const posterBaseUrl = 'https://www.themoviedb.org/t/p/w500';
@@ -18,42 +19,6 @@ const Home = () => {
       });
   }, []);
 
-  return (
-    <ImageListStyles.ImageListContainer>
-      {getMovies.map(item => (
-        <ImageListStyles.CardContainer key={item.id}>
-          <ImageListStyles.PosterContainer
-            image={`${posterBaseUrl}${item.poster_path}`}
-            alt={item.title}
-            title={item.title}
-          />
-          <ImageListStyles.CardContent>
-            <ImageListStyles.Typography
-              gutterBottom
-              variant="h5"
-              component="h2"
-            >
-              {item.title}
-            </ImageListStyles.Typography>
-            <ImageListStyles.Rating
-              variant="body2"
-              color="textSecondary"
-              component="span"
-            >
-              {item.vote_average}
-              <ImageListStyles.RatingIcon />
-            </ImageListStyles.Rating>
-            <ImageListStyles.ReleaseDate
-              variant="body2"
-              color="textSecondary"
-              component="span"
-            >
-              {item.release_date}
-            </ImageListStyles.ReleaseDate>
-          </ImageListStyles.CardContent>
-        </ImageListStyles.CardContainer>
-      ))}
-    </ImageListStyles.ImageListContainer>
-  );
+  return <MovieGrid movies={getMovies} posterBaseUrl={posterBaseUrl} />;
 };
 export default Home;
