@@ -74,6 +74,7 @@ jobs:
         env: 
           SKIP_PREFLIGHT_CHECK: true
         run: |
+          echo "REACT_APP_MOVIEDB_API=${{secrets.REACT_APP_MOVIEDB_API}}" >> .env
           CI=false yarn build
       - name: Deploy to Netlify
         uses: nwtgck/actions-netlify@v1.2
