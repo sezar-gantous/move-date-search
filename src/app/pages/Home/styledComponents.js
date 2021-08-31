@@ -24,6 +24,16 @@ export const CardContainer = styled(Card)`
   width: 100%;
   position: relative;
   text-align: center;
+  transition: all ease 100ms !important;
+
+  &:hover {
+    transform: scale(1.3);
+    z-index: 1;
+    box-shadow: 
+      5px 5px 5px 5px rgba(0,0,0,0.2), 
+      5px 5px 5px 5px rgba(0,0,0,0.14),
+      5px 5px 5px 5px rgba(0,0,0,0.12);
+  }
 `;
 export const Rating = styled(Typography)`
   position: absolute;
