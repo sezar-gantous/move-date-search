@@ -1,17 +1,18 @@
 import React from 'react';
 import { Home } from 'app/pages/Home';
+import { PageHeader } from 'app/PageHeader';
+import { PageFooter } from 'app/PageFooter';
 import './App.css';
-import styled from 'styled-components';
 
-const Container = styled.main`
-  padding-left: 0.325em;
-  padding-right: 0.325em;
-`;
 function App() {
   return (
-    <Container>
-      <Home />
-    </Container>
+    <>
+      <PageHeader />
+      <main>
+        <Home />
+      </main>
+      <PageFooter />
+    </>
   );
 }
 
