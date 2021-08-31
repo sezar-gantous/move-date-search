@@ -2,6 +2,8 @@ name: Integration workflow
 
 on: 
   push:
+  workflow_dispatch:
+
 
 jobs:
   test-react:
