@@ -4,6 +4,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import StarIcon from '@material-ui/icons/Star';
+import Skeleton from '@material-ui/lab/Skeleton';
 
 export const MovieGridContainer = styled.div`
   display: grid;
@@ -53,3 +54,4 @@ export const RatingIcon = styled(StarIcon)`
 
 export { CardContent };
 export { Typography };
+export { Skeleton };
