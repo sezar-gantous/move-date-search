@@ -3,9 +3,9 @@ import { render, screen } from '@testing-library/react';
 import Home from './Home';
 
 describe('Smoke Test', () => {
-  it('Renders pagination ', () => {
+  it('Renders movieGridContainer ', () => {
     render(<Home />, {});
-    const testId = screen.getByTestId('PagenationContainer');
+    const testId = screen.getByTestId('movieGridContainer');
     expect(testId).toBeInTheDocument();
   });
   it('Renders search ', () => {
